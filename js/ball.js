@@ -1,6 +1,7 @@
 class Ball extends Particle {
-  constructor(x, y) {
-    super(x, y)
+  constructor(x, y, label = "") {
+    super(x, y, label)
+    this.r = 8
 
     const options = {
       restitution: 0.5,

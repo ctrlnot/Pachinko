@@ -1,8 +1,7 @@
 class Pin extends Particle {
-  constructor(x, y) {
-    super(x, y)
+  constructor(x, y, label = "") {
+    super(x, y, label)
     this.r = 4
-    this._color = color(93)
 
     const options = {
       isStatic: true,
@@ -11,5 +10,9 @@ class Pin extends Particle {
     }
     this.body = Bodies.circle(this.x, this.y, this.r, options)
     World.add(world, this.body) // add this object to the world of matterjs
+  }
+
+  getColor() {
+    return this.label ? color(colors[this.label]) : color(93);
   }
 }

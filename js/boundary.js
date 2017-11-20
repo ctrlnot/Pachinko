@@ -1,16 +1,21 @@
 class Boundary {
-  constructor(x, y, w, h, col = color(255)) {
+  constructor(x, y, w, h, label = "") {
     this.x = x
     this.y = y
     this.w = w
     this.h = h
-    this._color = col
+    this.label = label
+    this._color = this.getColor();
 
     const options = {
       isStatic: true
     }
     this.body = Bodies.rectangle(this.x, this.y, this.w, this.h, options)
     World.add(world, this.body) // add this object to the world of matterjs
+  }
+
+  getColor() {
+    return this.label ? color(colors[this.label]) : color(255);
   }
 
   show() {

@@ -1,9 +1,14 @@
 class Particle {
-  constructor(x, y) {
+  constructor(x, y, label) {
     this.x = x
     this.y = y
     this.r = 10
-    this._color = color(0, 255, 0)
+    this.label = label
+    this._color = this.getColor()
+  }
+
+  getColor() {
+    return this.label ? color(colors[this.label]) : color(255)
   }
 
   show() {
