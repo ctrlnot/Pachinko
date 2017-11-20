@@ -4,6 +4,7 @@ class Boundary {
     this.y = y
     this.w = w
     this.h = h
+    this._color = color(0, 0, 255)
 
     const options = {
       isStatic: true
@@ -19,7 +20,8 @@ class Boundary {
     let pos = this.body.position // from matterjs position
     push() // push and pop to avoid getting the ball way off screen because of translate
     translate(pos.x, pos.y)
-    rect(0, 0, this.r * 2)
+    rectMode(CENTER)
+    rect(0, 0, this.w, this.h)
     pop()
   }
 }

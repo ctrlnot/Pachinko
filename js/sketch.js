@@ -39,6 +39,13 @@ function setup() {
   boundaries.push(new Boundary(-1, height / 2, 1, height)); // left
   boundaries.push(new Boundary(width + 1, height / 2, 1, height)); // right 
   boundaries.push(new Boundary(width / 2, height + 1, width, 1)); // bottom
+  for(let i = 0; i < rows + 2; i++) {
+    let x = i * space;
+    let h = 30;
+    let w = 10;
+    let y = height - h / 2;
+    boundaries.push(new Boundary(x, y, w, h)); // left
+  }
 }
 
 function draw() {
@@ -60,6 +67,11 @@ function draw() {
   // Display all particles
   for(let i = 0; i < balls.length; i++) {
     balls[i].show();
+  }
+
+  // Display all boundaries
+  for(let i = 0; i < boundaries.length; i++) {
+    boundaries[i].show();
   }
 }
 
