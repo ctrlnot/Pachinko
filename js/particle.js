@@ -3,7 +3,7 @@ class Particle {
     this.x = x
     this.y = y
     this.r = 10
-    this._color = color(255)
+    this._color = color(0, 255, 0)
   }
 
   show() {

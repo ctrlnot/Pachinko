@@ -1,10 +1,10 @@
 class Boundary {
-  constructor(x, y, w, h) {
+  constructor(x, y, w, h, col = color(255)) {
     this.x = x
     this.y = y
     this.w = w
     this.h = h
-    this._color = color(0, 0, 255)
+    this._color = col
 
     const options = {
       isStatic: true

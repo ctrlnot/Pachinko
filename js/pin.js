@@ -2,7 +2,7 @@ class Pin extends Particle {
   constructor(x, y) {
     super(x, y)
     this.r = 4
-    this._color = color(0, 255, 0)
+    this._color = color(93)
 
     const options = {
       isStatic: true,
