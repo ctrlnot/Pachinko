@@ -32,6 +32,17 @@ let pause = false;
 function setup() {
   createCanvas(480, 640);
 
+  // check if the hash is valid
+  if(hash.length < 1) {
+    gameMachineBroke();
+  }
+  for(let i = 1; i < hash.length; i++) {
+    const char = hash.charAt(i); // avoid the first one :^)
+    const allKeys = Object.keys(colors); // get all keys in colors object
+
+    if(allKeys.indexOf(char) === -1) gameMachineBroke(); // if not found BROKE!
+  }
+
   // initialize matterjs world
   engine = Engine.create();
   world = engine.world;
@@ -40,7 +51,8 @@ function setup() {
   world.gravity.y = 1.5;
 
   // collision event after world setup
-  Events.on(engine, 'collisionStart', (e) => {
+  let settled = false; // to avoid multiple collision on one bucket
+  Events.on(engine, 'collisionEnd', (e) => {
     const pairs = e.pairs;
     for(let i = 0; i < pairs.length; i++) {
       const labelA = pairs[i].bodyA.label;
@@ -49,8 +61,12 @@ function setup() {
       for(col in colors) {
         const bucketName = `${col}-Bucket`;
         if((labelA === "ball" && labelB === bucketName) || (labelA === bucketName && labelB === "ball")) {
-          console.log(`ended up with bucket ${col.toUpperCase()}!`);
-          ended = true;
+          // add end banner
+          if(!settled) {
+              banner = new Banner(col, colors[col]);
+              settled = true;
+              ended = true;
+          }
         }
       }
     }
@@ -86,23 +102,20 @@ function setup() {
     h = 50;
     x = i * bucketSpace + (w / 2);
     y = height - (h / 2);
-    boundaries.push(new Boundary(x, y, w, h, label)); // left splitter
+    boundaries.push(new Boundary(x, y, w, h, label)); // left bucket border
 
     w = bucketSpace;
     h = 4;
     x = i * bucketSpace + (bucketSpace / 2);
     y = height - (h / 2);
-    boundaries.push(new Boundary(x, y, w, h, label)); // ground
+    boundaries.push(new Boundary(x, y, w, h, label)); // bottom bucket border
 
     w = 4;
     h = 50;
     x = i * bucketSpace + bucketSpace - (w / 2);
     y = height - (h / 2);
-    boundaries.push(new Boundary(x, y, w, h, label)); // right splitter
+    boundaries.push(new Boundary(x, y, w, h, label)); // right bucket border
   }
-
-  // add end banner
-  banner = new Banner();
 }
 
 function draw() {
@@ -127,8 +140,10 @@ function draw() {
   }
 
   // Show result when pachinko is ended
-  if(ended) banner.addWidth();
-  banner.show();
+  if(ended) {
+    banner.addWidth();
+    banner.show();
+  }
 }
 
 function keyPressed() {
@@ -146,7 +161,14 @@ function keyPressed() {
 
 function mouseClicked() {
   // generate balls :^)
-  const label = hash.charAt(0); // get the first letter of hash
-  const b = new Ball(mouseX, 4, label);
-  balls.push(b);
+  if(!ended && balls.length < 1) {
+    const label = hash.charAt(0); // get the first letter of hash
+    const b = new Ball(mouseX, 4, label);
+    balls.push(b);
+  }
+}
+
+function gameMachineBroke() {
+  alert("Pachinko machine broke! Do not mess with the url ffs -_- or contact the one who gave you this link!");
+  noLoop();
 }
