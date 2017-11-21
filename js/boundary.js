@@ -11,6 +11,10 @@ class Boundary {
       isStatic: true
     }
     this.body = Bodies.rectangle(this.x, this.y, this.w, this.h, options)
+    // only add label to bottom bucket (the 4 is from setup where I created bot bucket height)
+    if(this.h === 4) {
+      this.body.label = `${this.label}-Bucket`
+    }
     World.add(world, this.body) // add this object to the world of matterjs
   }
 

@@ -9,6 +9,7 @@ class Pin extends Particle {
       friction: 0
     }
     this.body = Bodies.circle(this.x, this.y, this.r, options)
+    this.body.label = "pin"
     World.add(world, this.body) // add this object to the world of matterjs
   }
 

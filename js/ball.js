@@ -8,6 +8,7 @@ class Ball extends Particle {
       friction: 0
     }
     this.body = Bodies.circle(this.x, this.y, this.r, options)
+    this.body.label = "ball"
     World.add(world, this.body) // add this object to the world of matterjs
   }
 }

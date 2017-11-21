@@ -1,12 +1,14 @@
 const Engine = Matter.Engine,
       World  = Matter.World,
+      Events = Matter.Events,
       Bodies = Matter.Bodies;
 
 let engine,
     world,
     balls = [],
     pins = [],
-    boundaries = [];
+    boundaries = [],
+    banner;
 
 // set colors
 const colors = {'a': '#D93033',     // color(217, 48, 51) red
@@ -24,6 +26,7 @@ const colors = {'a': '#D93033',     // color(217, 48, 51) red
 
 const hash = window.location.hash.substr(1);
 
+let ended = false;
 let pause = false;
 
 function setup() {
@@ -36,52 +39,70 @@ function setup() {
   // set gravity
   world.gravity.y = 1.5;
 
+  // collision event after world setup
+  Events.on(engine, 'collisionStart', (e) => {
+    const pairs = e.pairs;
+    for(let i = 0; i < pairs.length; i++) {
+      const labelA = pairs[i].bodyA.label;
+      const labelB = pairs[i].bodyB.label;
+
+      for(col in colors) {
+        const bucketName = `${col}-Bucket`;
+        if((labelA === "ball" && labelB === bucketName) || (labelA === bucketName && labelB === "ball")) {
+          console.log(`ended up with bucket ${col.toUpperCase()}!`);
+          ended = true;
+        }
+      }
+    }
+  });
+
   // create pins
-  const cols = 10;
-  const rows = 10;
-  let space = width / cols;
+  const cols = 12;
+  const rows = 12;
+  const pinSpace = width / cols;
   for(let j = 0; j < cols; j++) {
     for(let i = 0; i < rows + 1; i++) {
-      let x = i * space;
+      let x = i * pinSpace;
       if(j % 2 === 0) {
-        x += space / 2;
+        x += pinSpace / 2;
       }
-      let y = 120 + j * space;
+      let y = 120 + j * pinSpace;
       pins.push(new Pin(x, y));
     }
   }
-
-  // create boundaries
-  const hashActLength = hash.length - 1;
-  space = width / hashActLength;
 
   // Add border boundaries
   boundaries.push(new Boundary(-2, height / 2, 1, height)); // left border
   boundaries.push(new Boundary(width + 2, height / 2, 1, height)); // right border
 
-  // Buckets
+  // Add buckets
+  const hashActLength = hash.length - 1;
+  const bucketSpace = width / hashActLength;
   for(let i = 0; i < hashActLength + 1; i++) {
     let w, h, x, y;
     const label = hash.charAt(i + 1);
 
     w = 4;
     h = 50;
-    x = i * space + (w / 2);
+    x = i * bucketSpace + (w / 2);
     y = height - (h / 2);
     boundaries.push(new Boundary(x, y, w, h, label)); // left splitter
 
-    w = space;
+    w = bucketSpace;
     h = 4;
-    x = i * space + (space / 2);
+    x = i * bucketSpace + (bucketSpace / 2);
     y = height - (h / 2);
     boundaries.push(new Boundary(x, y, w, h, label)); // ground
 
     w = 4;
     h = 50;
-    x = i * space + space - (w / 2);
+    x = i * bucketSpace + bucketSpace - (w / 2);
     y = height - (h / 2);
     boundaries.push(new Boundary(x, y, w, h, label)); // right splitter
   }
+
+  // add end banner
+  banner = new Banner();
 }
 
 function draw() {
@@ -95,7 +116,7 @@ function draw() {
     pins[i].show();
   }
 
-  // Display all particles
+  // Display all balls
   for(let i = 0; i < balls.length; i++) {
     balls[i].show();
   }
@@ -104,6 +125,10 @@ function draw() {
   for(let i = 0; i < boundaries.length; i++) {
     boundaries[i].show();
   }
+
+  // Show result when pachinko is ended
+  if(ended) banner.addWidth();
+  banner.show();
 }
 
 function keyPressed() {
