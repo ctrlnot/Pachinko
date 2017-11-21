@@ -121,6 +121,14 @@ function setup() {
 function draw() {
   background(41);
 
+  // Starting message or someting
+  fill(255);
+  noStroke();
+  const fontSize = 20;
+  textFont("Verdana", fontSize);
+  textAlign(CENTER);
+  text(`Click anywhere to start!`, width / 2, 40);
+
   // Run the matterjs simulation
   Engine.update(engine);
 
@@ -139,7 +147,7 @@ function draw() {
     boundaries[i].show();
   }
 
-  // Show result when pachinko is ended
+  // Display result when pachinko is ended
   if(ended) {
     banner.addWidth();
     banner.show();
@@ -163,8 +171,10 @@ function mouseClicked() {
   // generate balls :^)
   if(!ended && balls.length < 1) {
     const label = hash.charAt(0); // get the first letter of hash
-    const b = new Ball(mouseX, 4, label);
-    balls.push(b);
+    if(mouseX > 0 && mouseX < width) { // to make sure ball isn't off canvas
+      const b = new Ball(mouseX, 4, label);
+      balls.push(b);
+    }
   }
 }
 
