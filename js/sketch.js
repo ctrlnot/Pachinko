@@ -10,24 +10,40 @@ function setup() {
   world.gravity.y = 1.5;
 
   // create pins
-  const cols = 12;
-  const rows = 12;
-  const pinSpace = width / cols;
+  const pinSpace = 2.5 * (ballSize + (ballSize / 2));
+  const cols = (height * 0.7) / pinSpace;
+  const rows = width / pinSpace;
+  const allowanceFromTop = 100;
   for(let j = 0; j < cols; j++) {
-    for(let i = 0; i < rows + 1; i++) {
+    for(let i = 0; i < rows; i++) {
+      // const x = j % 2 === 0 ? i * pinSpace + pinSpace : i * pinSpace;
       let x = i * pinSpace;
       if(j % 2 === 0) {
         x += pinSpace / 2;
       }
-      let y = 120 + j * pinSpace;
+      const y = allowanceFromTop + (j * pinSpace);
       pins.push(new Pin(x, y));
     }
   }
 
+  // const cols = 12;
+  // const rows = 12;
+  // const pinSpace = width / cols;
+  // for(let j = 0; j < cols; j++) {
+  //   for(let i = 0; i < rows + 1; i++) {
+  //     let x = i * pinSpace;
+  //     if(j % 2 === 0) {
+  //       x += pinSpace / 2;
+  //     }
+  //     let y = 120 + j * pinSpace;
+  //     pins.push(new Pin(x, y));
+  //   }
+  // }
+
   // Add border boundaries
   boundaries.push(new Boundary(-2, height / 2, 1, height)); // left border
   boundaries.push(new Boundary(width + 2, height / 2, 1, height)); // right border
-  boundaries.push(new Boundary(width / 2, height + 1, width, 1)); // bottom border
+  boundaries.push(new Boundary(width / 2, height, width, 1)); // bottom border
 
   // // Add buckets
   // const hashActLength = 60 - 1;
@@ -60,6 +76,14 @@ function draw() {
 
   // Run the matterjs simulation
   Engine.update(engine);
+
+  // Generate pins
+  // const pinSpace = (ballSize + (ballSize / 2));
+  // for(let i = 0; i < width; i++) {
+  //   const x = i * pinSpace;
+  //   const y = 50;
+  //   pins.push(new Pin(x, y));
+  // }
 
   // Display all pins
   for(let i = 0; i < pins.length; i++) {
