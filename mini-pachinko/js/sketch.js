@@ -11,18 +11,18 @@ let engine,
     banner;
 
 // set colors
-const colors = {'a': '#D93033',     // color(217, 48, 51) red
-                'b': '#ED3655',     // color(237, 54, 85) light red
-                'c': '#F9220B',     // color(249, 34, 11) orange
-                'd': '#F19736',     // color(241, 151, 54) light orange
-                'e': '#8A35F2',     // color(138, 53, 242) violet
-                'f': '#FF0080',     // color(255, 0, 128) pink
-                'g': '#3571ED',     // color(53, 113, 237) blue
-                'h': '#32E4F2',     // color(50, 228, 242) light blue
-                'i': '#F5DF0F',     // color(245, 223, 15) yellow
-                'j': '#985A28',     // color(152, 90, 40) brown
-                'k': '#52C127',     // color(82, 193, 39) green
-                'l': '#7BFB0A'};    // color(123, 251, 10) light green
+const colors = {'t': '#566e93',
+                'h': '#73859b',
+                'u': '#c3cdd9',
+                'n': '#424a75',
+                'd': '#5a6a97',
+                'e': '#5c72aa',
+                'r': '#7295c8',
+                'c': '#3776ab',
+                'l': '#4594c2',
+                'a': '#9bbfe6',
+                'p': '#96cfe7',
+                's': '#325a86'};
 
 const hash = window.location.hash.substr(1);
 
