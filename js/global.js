@@ -5,7 +5,7 @@ const Engine = Matter.Engine,
       Bodies = Matter.Bodies;
 
 // Set global ball size for scaling
-const ballSize = 10; // 10px
+const ballSize = 10; // 10px radius
 
 // Set global variables for objects
 let engine,

@@ -10,43 +10,38 @@ function setup() {
   world.gravity.y = 1.5;
 
   // create pins
-  const pinSpace = 2.5 * (ballSize + (ballSize / 2));
-  const cols = (height * 0.7) / pinSpace;
+  const pinSpace = 4.5 * ballSize;
+  const cols = (height * 0.4) / pinSpace;
   const rows = width / pinSpace;
-  const allowanceFromTop = 100;
+  const allowanceFromTop = 350; // static for now
   for(let j = 0; j < cols; j++) {
     for(let i = 0; i < rows; i++) {
-      // const x = j % 2 === 0 ? i * pinSpace + pinSpace : i * pinSpace;
       let x = i * pinSpace;
       if(j % 2 === 0) {
         x += pinSpace / 2;
-      }
+      } 
       const y = allowanceFromTop + (j * pinSpace);
       pins.push(new Pin(x, y));
     }
   }
 
-  // const cols = 12;
-  // const rows = 12;
-  // const pinSpace = width / cols;
-  // for(let j = 0; j < cols; j++) {
-  //   for(let i = 0; i < rows + 1; i++) {
-  //     let x = i * pinSpace;
-  //     if(j % 2 === 0) {
-  //       x += pinSpace / 2;
-  //     }
-  //     let y = 120 + j * pinSpace;
-  //     pins.push(new Pin(x, y));
-  //   }
-  // }
-
-  // Add border boundaries
-  boundaries.push(new Boundary(-2, height / 2, 1, height)); // left border
-  boundaries.push(new Boundary(width + 2, height / 2, 1, height)); // right border
+  // add border boundaries
+  boundaries.push(new Boundary(-1, height / 2, 1, height)); // left border
+  boundaries.push(new Boundary(width + 1, height / 2, 1, height)); // right border
   boundaries.push(new Boundary(width / 2, height, width, 1)); // bottom border
 
-  // // Add buckets
-  // const hashActLength = 60 - 1;
+  // add buckets
+  boundaries.push(new Boundary(width / 2, height - 2, 30, 4, '#f00')); // test bot
+  boundaries.push(new Boundary(width / 2 - 15, height - 25, 4, 50, '#0f0')); // test left
+  boundaries.push(new Boundary(width / 2 + 15, height - 25, 4, 50, '#0f0')); // test left
+
+  // const hole = ballSize + 2; // 2px for allowance
+  // const holeBorder = 3;
+  // const totalHoleSize = hole + (holeBorder * 2); 
+  // const noOfHoles = 
+
+
+  // const hashActLength = 15;
   // const bucketSpace = width / hashActLength;
   // for(let i = 0; i < hashActLength + 1; i++) {
   //   let w, h, x, y;
