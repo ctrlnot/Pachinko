@@ -11,18 +11,14 @@ let engine,
     banner;
 
 // set colors
-const colors = {'t': '#566e93',
-                'h': '#73859b',
-                'u': '#c3cdd9',
-                'n': '#424a75',
-                'd': '#5a6a97',
-                'e': '#5c72aa',
-                'r': '#7295c8',
-                'c': '#3776ab',
-                'l': '#4594c2',
-                'a': '#9bbfe6',
-                'p': '#96cfe7',
-                's': '#325a86'};
+const colors = {'v': '#566e93',
+                'e': '#73859b',
+                'l': '#c3cdd9',
+                'o': '#424a75',
+                'c': '#5a6a97',
+                'i': '#5c72aa',
+                't': '#7295c8',
+                'y': '#3776ab'};
 
 const hash = window.location.hash.substr(1);
 
