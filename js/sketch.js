@@ -10,30 +10,37 @@ function setup() {
   world.gravity.y = 1.5;
 
   // create pins
-  const pinSpace = 4.5 * ballSize;
-  const cols = (height * 0.4) / pinSpace;
-  const rows = width / pinSpace;
-  const allowanceFromTop = 350; // static for now
-  for(let j = 0; j < cols; j++) {
-    for(let i = 0; i < rows; i++) {
-      let x = i * pinSpace;
-      if(j % 2 === 0) {
-        x += pinSpace / 2;
-      } 
-      const y = allowanceFromTop + (j * pinSpace);
-      pins.push(new Pin(x, y));
-    }
-  }
+  // const pinSpace = 4.5 * ballSize;
+  // const cols = (height * 0.4) / pinSpace;
+  // const rows = width / pinSpace;
+  // const allowanceFromTop = 350; // static for now
+  // for(let j = 0; j < cols; j++) {
+  //   for(let i = 0; i < rows; i++) {
+  //     let x = i * pinSpace;
+  //     if(j % 2 === 0) {
+  //       x += pinSpace / 2;
+  //     } 
+  //     const y = allowanceFromTop + (j * pinSpace);
+  //     pins.push(new Pin(x, y));
+  //   }
+  // }
 
   // add border boundaries
   boundaries.push(new Boundary(-1, height / 2, 1, height)); // left border
   boundaries.push(new Boundary(width + 1, height / 2, 1, height)); // right border
-  boundaries.push(new Boundary(width / 2, height, width, 1)); // bottom border
+  boundaries.push(new Boundary(width / 2, height, width, 10)); // bottom border
+
+  boundaries.push(new Boundary(width / 2 - 150, height / 2, 5, 300));
+  boundaries.push(new Boundary(width / 2 + 150, height / 2, 5, 300));
+
+  // add curves
+  // curves.push(new Curve({x: width / 2 - 150, y: height / 2}, {x: width / 2 + 150, y: height / 2 + 150}, {x: width / 2 - 75, y: height / 2 + 225}, {x: width / 2 + 75, y: height / 2 + 225}));
+  curves.push(new Curve({x: width / 2 - 150, y: height / 2 - 500},
+                        {x: width / 2 - 150, y: height / 2 + 150},
+                        {x: width / 2 + 150, y: height / 2 + 150},
+                        {x: width / 2 + 150, y: height / 2 - 500}))
 
   // add buckets
-  boundaries.push(new Boundary(width / 2, height - 2, 30, 4, '#f00')); // test bot
-  boundaries.push(new Boundary(width / 2 - 15, height - 25, 4, 50, '#0f0')); // test left
-  boundaries.push(new Boundary(width / 2 + 15, height - 25, 4, 50, '#0f0')); // test left
 
   // const hole = ballSize + 2; // 2px for allowance
   // const holeBorder = 3;
@@ -79,6 +86,11 @@ function draw() {
   //   const y = 50;
   //   pins.push(new Pin(x, y));
   // }
+
+  // Display all curve
+  for(let i = 0; i < curves.length; i++) {
+    curves[i].show();
+  }
 
   // Display all pins
   for(let i = 0; i < pins.length; i++) {

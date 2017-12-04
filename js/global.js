@@ -12,6 +12,7 @@ let engine,
     world,
     balls = [],
     pins = [],
+    curves = [],
     boundaries = [];
 
 let pause = false;
